@@ -1,19 +1,17 @@
-package org.techtown.gabojago.menu.record.calendar
+package com.example.wellfit
 
 import android.graphics.Point
-import android.util.Log
-import android.util.TypedValue.COMPLEX_UNIT_PX
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.techtown.gabojago.databinding.ItemCalendarGridviewBinding
+import com.example.wellfit.databinding.ItemCalendarGridviewBinding
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 //달력 날짜 그리드뷰-어댑터
-class CalendarAdapter(private val viewDate: String,private val randomresultdateList :ArrayList<Int>) : RecyclerView.Adapter <CalendarAdapter.ViewHolder>() {
+class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <CalendarAdapter.ViewHolder>() {
 
     //클릭리스너 인터페이스
     interface MyItemClickListener {
@@ -40,19 +38,6 @@ class CalendarAdapter(private val viewDate: String,private val randomresultdateL
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemCalendarGridviewBinding =
             ItemCalendarGridviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-        //실제 화면 size 받아오기
-        val display = parent.display
-        val size = Point()
-        display.getSize(size)
-        val width = size.x
-        val height = size.y
-
-        //받아온 화면 size에 따라 조정
-        binding.itemLayout.layoutParams.height = height/15
-        binding.itemEmpty.layoutParams.height = height/160
-        binding.itemGridviewTodayIv.layoutParams.height = height/140
-        binding.itemGridviewTodayIv.layoutParams.width = height/140
 
         //달력 날짜 초기 설정
         setEmptyDate(viewDate)
@@ -89,9 +74,9 @@ class CalendarAdapter(private val viewDate: String,private val randomresultdateL
                 }
 
                 //모험한 날짜에 색표시
-                if ((position - daynum + 2) == randomresultdateList[position - daynum+2]) {
-                    binding.itemGridviewRecordIv.visibility = View.VISIBLE
-                }
+//                if ((position - daynum + 2) == randomresultdateList[position - daynum+2]) {
+//                    binding.itemGridviewTv.visibility = View.VISIBLE
+//                }
             }
         }
     }

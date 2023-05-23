@@ -1,22 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/home_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="36sp"
-        android:textColor="#000000"
-        android:text="home"
+    <ImageView
+        android:id="@+id/home_backView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/home_background"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+    <View
+        android:id="@+id/home_navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#92CFA5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
+    <ImageView
+        android:id="@+id/home_leftarrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/left_arrow"
+        android:scaleType="fitXY"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_navigationView"
+        app:layout_constraintBottom_toBottomOf="@id/home_navigationView"
+        />
+
+    <TextView
+        android:id="@+id/home_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:text="5월"
+        android:textColor="@color/white"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_navigationView"
+        app:layout_constraintBottom_toBottomOf="@id/home_navigationView"
+        />
+
+    <ImageView
+        android:id="@+id/home_rightarrow"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/right_arrow"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_navigationView"
+        app:layout_constraintBottom_toBottomOf="@id/home_navigationView"
+        />
+
+    <View
+        android:id="@+id/home_calendarView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="@drawable/calendar_box"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_navigationView"
+        />
+
+    <LinearLayout
+        android:id="@+id/calendar_week_layout"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_calendarView"
+        app:layout_constraintEnd_toEndOf="@id/home_calendarView"
+        app:layout_constraintTop_toTopOf="@id/home_calendarView">
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="SUN"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#ff6745"
+            />
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="MON"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="TUE"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="WED"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="THU"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="FRI"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:text="SAT"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#0053f3"
+            />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar_gridview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/home_calendarView"
+        app:layout_constraintStart_toStartOf="@id/home_calendarView"
+        app:layout_constraintTop_toBottomOf="@id/calendar_week_layout"
+        tools:listitem="@layout/item_calendar_gridview" />
 </androidx.constraintlayout.widget.ConstraintLayout>
