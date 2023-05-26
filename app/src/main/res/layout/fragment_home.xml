@@ -47,8 +47,8 @@
         android:textStyle="bold"
         android:textSize="25sp"
         android:text="5월"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_navigationView"
@@ -69,8 +69,10 @@
 
     <View
         android:id="@+id/home_calendarView"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/calendar_box"
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +84,7 @@
         android:id="@+id/calendar_week_layout"
         android:layout_width="0dp"
         android:layout_height="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="@id/home_calendarView"
@@ -181,4 +183,143 @@
         app:layout_constraintStart_toStartOf="@id/home_calendarView"
         app:layout_constraintTop_toBottomOf="@id/calendar_week_layout"
         tools:listitem="@layout/item_calendar_gridview" />
+
+    <View
+        android:id="@+id/home_preview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/calendar_box"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_calendarView"
+        />
+
+    <TextView
+        android:id="@+id/home_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:text="5월 15일"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="19dp"
+        android:layout_marginStart="23dp"
+        app:layout_constraintStart_toStartOf="@id/home_preview"
+        app:layout_constraintTop_toTopOf="@+id/home_preview"
+        />
+
+    <ImageView
+        android:id="@+id/home_pencil"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/pencil"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="@id/home_preview"
+        app:layout_constraintTop_toTopOf="@id/home_date_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_date_tv"
+        />
+
+    <View
+        android:id="@+id/home_bar"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="#478c5c"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_preview"
+        app:layout_constraintEnd_toEndOf="@id/home_preview"
+        app:layout_constraintTop_toBottomOf="@id/home_date_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_workout_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="오늘의 운동"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginStart="23dp"
+        app:layout_constraintStart_toStartOf="@id/home_preview"
+        app:layout_constraintTop_toBottomOf="@+id/home_bar"
+        app:layout_constraintBottom_toTopOf="@id/home_diet_tv"
+        />
+
+    <ImageView
+        android:id="@+id/home_point1"
+        android:layout_width="39dp"
+        android:layout_height="7dp"
+        android:src="@drawable/three_point"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@id/home_workout_tv"
+        app:layout_constraintEnd_toStartOf="@id/home_check1"
+        app:layout_constraintTop_toTopOf="@+id/home_workout_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_workout_tv"
+        />
+
+    <ImageView
+        android:id="@+id/home_check1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/check"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@id/home_preview"
+        app:layout_constraintTop_toTopOf="@+id/home_workout_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_workout_tv"
+        />
+
+    <TextView
+        android:id="@+id/home_diet_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="오늘의 식단"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginStart="23dp"
+        app:layout_constraintStart_toStartOf="@id/home_preview"
+        app:layout_constraintTop_toBottomOf="@+id/home_workout_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_preview"
+        />
+
+    <ImageView
+        android:id="@+id/home_point2"
+        android:layout_width="39dp"
+        android:layout_height="7dp"
+        android:src="@drawable/three_point"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@id/home_workout_tv"
+        app:layout_constraintEnd_toStartOf="@id/home_check2"
+        app:layout_constraintTop_toTopOf="@+id/home_diet_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_diet_tv"
+        />
+
+    <ImageView
+        android:id="@+id/home_check2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/warning"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@id/home_preview"
+        app:layout_constraintTop_toTopOf="@+id/home_diet_tv"
+        app:layout_constraintBottom_toBottomOf="@id/home_diet_tv"
+        />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
