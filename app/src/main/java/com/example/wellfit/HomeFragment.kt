@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,10 +15,12 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
 //홈화면
 class HomeFragment : Fragment(){
 
     lateinit var binding: FragmentHomeBinding
+    lateinit var calendarAdapter: CalendarAdapter
     private lateinit var callback: OnBackPressedCallback
     //보여줄 년, 월
     private var viewDate = ""
@@ -28,7 +31,7 @@ class HomeFragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         init()
@@ -42,15 +45,17 @@ class HomeFragment : Fragment(){
         binding.calendarGridview.addItemDecoration(HorizontalItemDecorator(15,15))
 
         viewDate = initDate().substring(0,6)
-        Log.d("아",viewDate)
 
-        val calendarAdapter = CalendarAdapter(viewDate)
+        calendarAdapter = CalendarAdapter(viewDate)
         binding.calendarGridview.adapter = calendarAdapter
         calendarAdapter.setMyItemClickListener(object :
             CalendarAdapter.MyItemClickListener {
             override fun onItemClick(date: String) {
                 allDate = date
+                val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
+                Log.e("날짜",selectDay)
                 calendarAdapter.notifyDataSetChanged()
+                binding.homeDateTv.text = selectDay
             }
         })
 
@@ -66,12 +71,16 @@ class HomeFragment : Fragment(){
                 val date = Date(cal.timeInMillis)
                 val dateFormat2 = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
                 viewDate = dateFormat2.format(date)
-            val calendarAdapter = CalendarAdapter(viewDate)
+            calendarAdapter = CalendarAdapter(viewDate)
             binding.calendarGridview.adapter = calendarAdapter
             calendarAdapter.setMyItemClickListener(object :
                 CalendarAdapter.MyItemClickListener {
                 override fun onItemClick(date: String) {
                     allDate = date
+                    val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
+                    Log.e("날짜",selectDay)
+                    calendarAdapter.notifyDataSetChanged()
+                    binding.homeDateTv.text = selectDay
                 }
             })
         }
@@ -81,12 +90,16 @@ class HomeFragment : Fragment(){
                 val date = Date(cal.timeInMillis)
                 val dateFormat2 = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
                 viewDate = dateFormat2.format(date)
-            val calendarAdapter = CalendarAdapter(viewDate)
+            calendarAdapter = CalendarAdapter(viewDate)
             binding.calendarGridview.adapter = calendarAdapter
             calendarAdapter.setMyItemClickListener(object :
                 CalendarAdapter.MyItemClickListener {
                 override fun onItemClick(date: String) {
                     allDate = date
+                    val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
+                    Log.e("날짜",selectDay)
+                    calendarAdapter.notifyDataSetChanged()
+                    binding.homeDateTv.text = selectDay
                 }
             })
         }
