@@ -23,6 +23,6 @@ class DietFragment : Fragment() {
     }
 
     fun init() {
-        MealCheck()
+
     }
 }
