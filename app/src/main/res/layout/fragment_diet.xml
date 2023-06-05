@@ -147,6 +147,7 @@
         android:backgroundTint="#478C5C"/>
 
     <Button
+        android:id="@+id/addBtn"
         android:layout_width="120dp"
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"

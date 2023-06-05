@@ -12,6 +12,9 @@ import com.example.wellfit.databinding.FragmentDietBinding
 
 class DietFragment : Fragment() {
     lateinit var binding: FragmentDietBinding
+    lateinit var brList: ArrayList<MyFoodData>
+    lateinit var luList: ArrayList<MyFoodData>
+    lateinit var diList: ArrayList<MyFoodData>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +24,10 @@ class DietFragment : Fragment() {
         binding = FragmentDietBinding.inflate(inflater, container, false)
 
         initRadio()
+
+        binding.addBtn.setOnClickListener {
+            addFood()
+        }
 
         return binding.root
     }
@@ -53,5 +60,25 @@ class DietFragment : Fragment() {
         }
     }
 
-
+    fun addFood() {
+        binding.radioGroup.setOnCheckedChangeListener {radioGroup, checkedID ->
+            when (checkedID) {
+                R.id.radio_breakfast -> {
+                    brList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    binding.firstEt.setText("")
+                    binding.secondEt.setText("")
+                }
+                R.id.radio_lunch -> {
+                    luList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    binding.firstEt.setText("")
+                    binding.secondEt.setText("")
+                }
+                R.id.radio_dinner -> {
+                    diList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    binding.firstEt.setText("")
+                    binding.secondEt.setText("")
+                }
+            }
+        }
+    }
 }
