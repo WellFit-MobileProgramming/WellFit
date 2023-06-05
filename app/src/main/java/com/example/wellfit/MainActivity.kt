@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.settingFragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, DietFragment())
+                        .replace(R.id.main_frm, SettingFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
