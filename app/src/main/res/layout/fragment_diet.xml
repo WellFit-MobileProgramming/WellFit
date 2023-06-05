@@ -63,7 +63,7 @@
         android:layout_marginTop="165dp"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radio_breakfast"
             android:layout_width="100dp"
             android:layout_height="60dp"
@@ -72,9 +72,8 @@
             android:textSize="20sp"
             android:button="@android:color/transparent"
             android:background="@drawable/radio_breakfast_selector"
-            android:checked="true"
-            android:onClick="onRadioButtonClicked"/>
-        <androidx.appcompat.widget.AppCompatRadioButton
+            android:checked="true"/>
+        <RadioButton
             android:id="@+id/radio_lunch"
             android:layout_width="100dp"
             android:layout_height="60dp"
@@ -83,10 +82,9 @@
             android:textSize="20sp"
             android:button="@android:color/transparent"
             android:background="@drawable/radio_lunch_selector"
-            android:checked="false"
-            android:onClick="onRadioButtonClicked"
-            android:layout_marginStart="22dp"/>
-        <androidx.appcompat.widget.AppCompatRadioButton
+            android:layout_marginStart="22dp"
+            android:textColor="#92CFA5"/>
+        <RadioButton
             android:id="@+id/radio_dinner"
             android:layout_width="100dp"
             android:layout_height="60dp"
@@ -95,9 +93,8 @@
             android:textSize="20sp"
             android:button="@android:color/transparent"
             android:background="@drawable/radio_dinner_selector"
-            android:checked="false"
-            android:onClick="onRadioButtonClicked"
-            android:layout_marginStart="22dp"/>
+            android:layout_marginStart="22dp"
+            android:textColor="#92CFA5"/>
     </RadioGroup>
 
     <TextView
@@ -121,6 +118,7 @@
         android:layout_marginStart="24dp"
         android:hint="음식을 입력하세요."
         android:textColorHint="#a3a3a3"
+        android:textColor="@color/black"
         android:backgroundTint="#478C5C"/>
 
     <TextView
@@ -145,6 +143,7 @@
         android:textSize="17sp"
         android:hint="칼로리를 입력하세요."
         android:textColorHint="#a3a3a3"
+        android:textColor="@color/black"
         android:backgroundTint="#478C5C"/>
 
     <Button
