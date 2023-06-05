@@ -1,6 +1,5 @@
 package com.example.wellfit
 
-import android.graphics.Point
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +24,10 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         mItemClickListener = itemClickListener
     }
 
-    private val days = ArrayList<String>()
-    private val select = ArrayList<Int>()
+    val days = ArrayList<String>()
+    var select = ArrayList<Int>()
+    var selectNum = -1
+    var todayNum = -1
     private var specialDate = ""
     var daynum = 0
     var month = ""
@@ -42,6 +43,7 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
             ItemCalendarGridviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         //달력 날짜 초기 설정
+        today()
         setEmptyDate(viewDate)
         return ViewHolder(binding)
     }
@@ -50,29 +52,13 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
     //뷰홀더에 데이터를 바인딩해줘야 할 때마다 호출되는 함수 => 엄청나게 많이 호출
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
-        if (days[position] != "") {
-            today()
-            //오늘날짜에 점 표시
-            if (todayYear == year.toInt() && todayMonth == month.toInt() && todayDate == days[position].toInt()) {
-                holder.binding.itemGridviewTodayIv.visibility = View.VISIBLE
-            }
-        }
 
-        holder.binding.itemGridviewTv.setOnClickListener{
+        holder.itemView.setOnClickListener{
             //달력 날짜 형식 두자리수로 변경
             val df = DecimalFormat("00")
             var date = df.format(days[position].toInt())
+            selectNum = position
             mItemClickListener.onItemClick(specialDate+date)
-
-            for (i in 0 until itemCount) {
-                if (i == position) {
-                    Log.e("왜","안돼")
-                    holder.binding.itemGridviewTodayIv.visibility = View.VISIBLE
-                } else {
-                    holder.binding.itemGridviewTodayIv.visibility = View.GONE
-                }
-            }
-
         }
     }
 
@@ -81,7 +67,19 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.itemGridviewTv.text = days[position]
-
+            if (selectNum == -1){
+                if(todayNum == position){
+                    binding.itemGridviewTodayIv.visibility = View.VISIBLE
+                }else{
+                    binding.itemGridviewTodayIv.visibility = View.GONE
+                }
+            }else{
+                if(selectNum == position){
+                    binding.itemGridviewTodayIv.visibility = View.VISIBLE
+                }else{
+                    binding.itemGridviewTodayIv.visibility = View.GONE
+                }
+            }
 
         }
     }
@@ -95,15 +93,14 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         cal.set(eventDate.substring(0,4).toInt(), eventDate.substring(4,6).toInt() - 1, 1)
         specialDate = eventDate.substring(0,6)
         val dayNum: Int = cal.get(Calendar.DAY_OF_WEEK)
+        daynum = dayNum
         //1일 - 요일 매칭 시키기 위해 공백 add
         for (i in 1 until dayNum) {
             days.add("")
-            select.add(-1)
         }
         val daySize = setCalendarDate(cal.get(Calendar.MONTH) + 1)
         month = (cal.get(Calendar.MONTH) + 1).toString()
         year = cal.get(Calendar.YEAR).toString()
-        daynum = dayNum
         return (dayNum + daySize)
     }
 
@@ -112,7 +109,7 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         cal.set(Calendar.MONTH, month - 1)
         for (i in 0 until cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             days.add("" + (i + 1))
-            select.add(-1)
+            todayNum = i + daynum - 2
         }
         return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
     }
@@ -127,10 +124,6 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         todayYear = yearFormat.format(date).toInt()
         todayMonth = monthFormat.format(date).toInt()
         todayDate = dateFormat.format(date).toInt()
-    }
-
-    private fun todayCheck(){
-
     }
 }
 
