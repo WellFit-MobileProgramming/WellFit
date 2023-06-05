@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentRecordBinding
 import java.text.SimpleDateFormat
+import java.util.ArrayList
 import java.util.Date
 import java.util.Locale
 
 class RecordFragment : Fragment(){
 
     lateinit var binding: FragmentRecordBinding
+    val recordWorkout = ArrayList<RecordWorkout>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,15 +27,16 @@ class RecordFragment : Fragment(){
     ): View? {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
 
+        setData()
+
         //캘린더 액티비티에서 값이 넘어왔을 경우
         val specialDate = arguments?.getString("changeDate")
-        Log.d("아",specialDate.toString())
         if (specialDate != null) {
             //날짜, 구분선, 메시지 조정
             binding.recordMonth.setText(specialDate.substring(4,6).toInt().toString()+"월")
             binding.recordDateTv.setText(specialDate.substring(4,6).toInt().toString()+"월 "+specialDate.substring(6).toInt().toString()+"일")
 
-            //주간캘린더 다시 불러오기
+            //주간캘린더 불러오기
             binding.recordWeekRecyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             val recordWeekRVAdapter = RecordWeekRVAdapter(specialDate)
@@ -46,6 +49,19 @@ class RecordFragment : Fragment(){
                     binding.recordDateTv.setText(day.substring(4,6).toInt().toString()+"월 "+day.substring(6).toInt().toString()+"일")
                 }
             })
+
+            binding.recordWorkoutRecyclerview.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val recordWorkoutRVAdapter = RecordWorkoutRVAdapter(recordWorkout)
+            binding.recordWorkoutRecyclerview.adapter = recordWorkoutRVAdapter
+
+            recordWorkoutRVAdapter.setMyItemClickListener(object :
+                RecordWorkoutRVAdapter.MyItemClickListener {
+                override fun onItemClick(position: Int) {
+                    TODO("Not yet implemented")
+                }
+                }
+            )
 
 
         }else{
@@ -100,5 +116,11 @@ class RecordFragment : Fragment(){
         val stringMonth = (monthFormat.format(month).toInt()).toString()+"월"
 
         return stringMonth
+    }
+
+    private fun setData() {
+        for (i in 0 until 11){
+            recordWorkout.add(RecordWorkout("사이드 레터럴 라이즈","2kg / 3kg / 4kg / 5kg \n 3kg / 4kg"))
+        }
     }
 }
