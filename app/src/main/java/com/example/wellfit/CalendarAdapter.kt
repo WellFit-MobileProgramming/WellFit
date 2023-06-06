@@ -25,7 +25,6 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
     }
 
     val days = ArrayList<String>()
-    var select = ArrayList<Int>()
     var selectNum = -1
     var todayNum = -1
     private var specialDate = ""
@@ -109,7 +108,9 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         cal.set(Calendar.MONTH, month - 1)
         for (i in 0 until cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             days.add("" + (i + 1))
-            todayNum = i + daynum - 2
+            if (i == todayDate){
+                todayNum = i + daynum - 2
+            }
         }
         return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
     }

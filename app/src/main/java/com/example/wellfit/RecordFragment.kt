@@ -91,13 +91,30 @@ class RecordFragment : Fragment(){
         val width = size.x
         val height = size.y
         binding.recordWeekRecyclerview.addItemDecoration(HorizontalItemDecorator(width/75,height/200))
+
+        onClick()
+
         return binding.root
+    }
+
+    private fun onClick(){
+        binding.recordWorkoutPlusBtn.setOnClickListener {
+            var workoutDetailFragment = WorkoutDetailFragment()
+            var bundle = Bundle()
+            var date = binding.recordDateTv.text.toString()
+            bundle.putString("date", date)
+            workoutDetailFragment.arguments = bundle
+            activity?.supportFragmentManager!!.beginTransaction()
+                .replace(R.id.main_frm, workoutDetailFragment)
+                .commit()
+        }
     }
 
     private fun init() {
         //시작시 해당월, 날짜 (오늘날짜로 default)
         binding.recordDateTv.setText(setdate().substring(4,6).toInt().toString()+"월 "+setdate().substring(6).toInt().toString()+"일")
         binding.recordMonth.setText(setMonth())
+
     }
 
     private fun setdate(): String {
