@@ -108,6 +108,11 @@ class RecordFragment : Fragment(){
                 .replace(R.id.main_frm, workoutDetailFragment)
                 .commit()
         }
+        binding.recordDietPlusBtn.setOnClickListener {
+            activity?.supportFragmentManager!!.beginTransaction()
+                .replace(R.id.main_frm, DietFragment())
+                .commit()
+        }
     }
 
     private fun init() {

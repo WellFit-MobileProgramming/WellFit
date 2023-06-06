@@ -61,20 +61,37 @@ class DietFragment : Fragment() {
     }
 
     fun addFood() {
-        binding.radioGroup.setOnCheckedChangeListener {radioGroup, checkedID ->
-            when (checkedID) {
+        binding.addBtn.setOnClickListener {
+            when (binding.radioGroup.checkedRadioButtonId) {
                 R.id.radio_breakfast -> {
-                    brList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    brList.add(
+                        MyFoodData(
+                            binding.firstEt.text.toString(),
+                            binding.secondEt.text.toString().toInt()
+                        )
+                    )
                     binding.firstEt.setText("")
                     binding.secondEt.setText("")
                 }
+
                 R.id.radio_lunch -> {
-                    luList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    luList.add(
+                        MyFoodData(
+                            binding.firstEt.text.toString(),
+                            binding.secondEt.text.toString().toInt()
+                        )
+                    )
                     binding.firstEt.setText("")
                     binding.secondEt.setText("")
                 }
+
                 R.id.radio_dinner -> {
-                    diList.add(MyFoodData(binding.firstEt.text.toString(), binding.secondEt.text.toString().toInt()))
+                    diList.add(
+                        MyFoodData(
+                            binding.firstEt.text.toString(),
+                            binding.secondEt.text.toString().toInt()
+                        )
+                    )
                     binding.firstEt.setText("")
                     binding.secondEt.setText("")
                 }

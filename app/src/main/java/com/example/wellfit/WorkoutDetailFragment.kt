@@ -62,7 +62,7 @@ class WorkoutDetailFragment : Fragment(){
 
     private fun setData() {
         for (i in 0 until 11){
-            recordWorkout.add(RecordWorkout("사이드 레터럴 라이즈","2kg / 3kg / 4kg / 5kg \n 3kg / 4kg"))
+            recordWorkout.add(RecordWorkout("사이드 레터럴 레이즈","2kg / 3kg / 4kg / 5kg \n 3kg / 4kg"))
         }
     }
 }
