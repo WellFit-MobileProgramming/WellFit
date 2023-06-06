@@ -57,9 +57,9 @@ class RecordFragment : Fragment(){
 
             recordWorkoutRVAdapter.setMyItemClickListener(object :
                 RecordWorkoutRVAdapter.MyItemClickListener {
-                override fun onItemClick(position: Int) {
-                    TODO("Not yet implemented")
-                }
+                    override fun onItemClick(position: Int) {
+                        TODO("Not yet implemented")
+                    }
                 }
             )
 
