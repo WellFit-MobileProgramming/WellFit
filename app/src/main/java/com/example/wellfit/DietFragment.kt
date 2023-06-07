@@ -61,40 +61,38 @@ class DietFragment : Fragment() {
     }
 
     fun addFood() {
-        binding.addBtn.setOnClickListener {
-            when (binding.radioGroup.checkedRadioButtonId) {
-                R.id.radio_breakfast -> {
-                    brList.add(
-                        MyFoodData(
-                            binding.firstEt.text.toString(),
-                            binding.secondEt.text.toString().toInt()
-                        )
+        when (binding.radioGroup.checkedRadioButtonId) {
+            R.id.radio_breakfast -> {
+                brList.add(
+                    MyFoodData(
+                        binding.firstEt.text.toString(),
+                        binding.secondEt.text.toString().toInt()
                     )
-                    binding.firstEt.setText("")
-                    binding.secondEt.setText("")
-                }
+                )
+                binding.firstEt.setText("")
+                binding.secondEt.setText("")
+            }
 
-                R.id.radio_lunch -> {
-                    luList.add(
-                        MyFoodData(
-                            binding.firstEt.text.toString(),
-                            binding.secondEt.text.toString().toInt()
-                        )
+            R.id.radio_lunch -> {
+                luList.add(
+                    MyFoodData(
+                        binding.firstEt.text.toString(),
+                        binding.secondEt.text.toString().toInt()
                     )
-                    binding.firstEt.setText("")
-                    binding.secondEt.setText("")
-                }
+                )
+                binding.firstEt.setText("")
+                binding.secondEt.setText("")
+            }
 
-                R.id.radio_dinner -> {
-                    diList.add(
-                        MyFoodData(
-                            binding.firstEt.text.toString(),
-                            binding.secondEt.text.toString().toInt()
-                        )
+            R.id.radio_dinner -> {
+                diList.add(
+                    MyFoodData(
+                        binding.firstEt.text.toString(),
+                        binding.secondEt.text.toString().toInt()
                     )
-                    binding.firstEt.setText("")
-                    binding.secondEt.setText("")
-                }
+                )
+                binding.firstEt.setText("")
+                binding.secondEt.setText("")
             }
         }
     }
