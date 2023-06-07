@@ -19,7 +19,6 @@ import java.util.Locale
 class WorkoutDetailFragment : Fragment(){
 
     lateinit var binding: FragmentWorkoutDetailBinding
-    val recordWorkout = ArrayList<RecordWorkout>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +26,6 @@ class WorkoutDetailFragment : Fragment(){
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentWorkoutDetailBinding.inflate(inflater, container, false)
-
-        setData()
 
         //캘린더 액티비티에서 값이 넘어왔을 경우
         val specialDate = arguments?.getString("changeDate")
@@ -57,12 +54,5 @@ class WorkoutDetailFragment : Fragment(){
             binding.workoutDetailRecyclerview.adapter = workoutDetailRVAdapter
         }
         return binding.root
-    }
-
-
-    private fun setData() {
-        for (i in 0 until 11){
-            recordWorkout.add(RecordWorkout("사이드 레터럴 라이즈","2kg / 3kg / 4kg / 5kg \n 3kg / 4kg"))
-        }
     }
 }
