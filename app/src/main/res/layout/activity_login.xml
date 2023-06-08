@@ -20,6 +20,7 @@
             android:textSize="50sp"
             android:textColor="#478C5C"/>
         <EditText
+            android:id="@+id/id"
             android:textColor="#000"
             android:backgroundTint="#478C5C"
             android:drawableLeft="@drawable/img_loginuser"
@@ -33,6 +34,7 @@
             android:textColorHint="#ccc"
             android:paddingLeft="15dp"/>
         <EditText
+            android:id="@+id/pw"
             android:textColor="#000"
             android:backgroundTint="#478C5C"
             android:layout_width="match_parent"
@@ -45,6 +47,8 @@
             android:textColorHint="#ccc"
             android:paddingLeft="15dp"/>
         <Button
+            android:enabled="false"
+            android:id="@+id/loginBtn"
             android:text="로그인"
             android:background="@drawable/loginbtnbackground"
             android:textFontWeight="700"
@@ -56,14 +60,37 @@
             android:paddingVertical="23dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <TextView
+        <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="아직 가입하지 않으셨다면 회원가입 하러가기"
-            android:textFontWeight="500"
-            android:textSize="13sp"
-            android:textColor="#000000"
-            android:textAlignment="center"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아직 가입하지 않으셨다면 "
+                android:textFontWeight="500"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:textAlignment="center"/>
+            <TextView
+                android:id="@+id/moveSignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원가입"
+                android:textFontWeight="700"
+                android:textSize="13sp"
+                android:textColor="#036B3F"
+                android:textAlignment="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 하러가기"
+                android:textFontWeight="500"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 
