@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "8882521669",
+    "project_id": "wellfit-384a8",
+    "storage_bucket": "wellfit-384a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8882521669:android:ac2a793b02645fdde4852c",
+        "android_client_info": {
+          "package_name": "com.example.wellfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8882521669-vkougl5oooirg8ao20lier389bg9mp8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5eFJf81f9ust60qxzak2i5D9Frh4NGaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8882521669-vkougl5oooirg8ao20lier389bg9mp8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
