@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.wellfit.databinding.ActivitySignupBinding
 
@@ -51,10 +52,11 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "다시 확인해주세요.", Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(this,SignupActivity2::class.java)
-                intent.putExtra("name",binding.name.text)
-                intent.putExtra("birth",binding.birth.text)
-                intent.putExtra("phone",binding.phone.text)
+                intent.putExtra("name",binding.name.text.toString())
+                intent.putExtra("birth",binding.birth.text.toString())
+                intent.putExtra("phone",binding.phone.text.toString())
                 intent.putExtra("gender",gender)
+                Log.e("왜?",binding.name.text.toString())
                 startActivity(intent)
             }
         }

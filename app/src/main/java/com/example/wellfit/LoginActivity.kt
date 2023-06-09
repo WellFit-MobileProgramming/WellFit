@@ -32,8 +32,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initLayout() {
-        val intent = Intent(this,SignupActivity::class.java)
-        val signupCheck = intent.getBooleanExtra("signup",false)
+        val intent1 = intent
+        val intent2 = Intent(this,SignupActivity::class.java)
+        val signupCheck = intent1.getBooleanExtra("signup",false)
         if(signupCheck) {
             Toast.makeText(
                 this, "회원가입을 축하드립니다!",
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         val moveBtn = binding.moveSignup
         val loginBtn = binding.loginBtn
         moveBtn.setOnClickListener{
-            startActivity(intent)
+            startActivity(intent2)
         }
         val id = binding.id
         val pw = binding.pw

@@ -3,6 +3,7 @@ package com.example.wellfit
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import com.example.wellfit.databinding.ActivitySignup2Binding
@@ -18,11 +19,12 @@ class SignupActivity2 : AppCompatActivity() {
         initLayout()
     }
     private fun initLayout() {
-        val intent = Intent(this,SignupActivity3::class.java)
-        val name = intent.getStringExtra("name")
-        val birth = intent.getStringExtra("birth")
-        val phone = intent.getStringExtra("phone")
-        val gender = intent.getStringExtra("gender")
+        val intent1 = intent
+        val name = intent1.getStringExtra("name").toString()
+        val birth = intent1.getStringExtra("birth").toString()
+        val phone = intent1.getStringExtra("phone").toString()
+        val gender = intent1.getStringExtra("gender").toString()
+        Log.e("돼?",name)
 
         val moveBtn = binding.moveSignup
         moveBtn.setOnClickListener{
@@ -35,17 +37,17 @@ class SignupActivity2 : AppCompatActivity() {
                 if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%^&*()-])(?=.*[a-zA-Z]).{8,20}$", pw)) {
                     Toast.makeText(this, "비밀번호 형식을 지켜주세요.", Toast.LENGTH_SHORT).show()
                 }else{
-                    if(!pw.equals(pwCertification)){
-                        Toast.makeText(this, pw.equals(pwCertification).toString(), Toast.LENGTH_SHORT).show()
-//                        Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    if(pw != pwCertification){
+                        Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                     }else{
-                        intent.putExtra("name",name)
-                        intent.putExtra("birth",birth)
-                        intent.putExtra("phone",phone)
-                        intent.putExtra("gender",gender)
-                        intent.putExtra("email",email)
-                        intent.putExtra("pw",pw)
-                        startActivity(intent)
+                        val intent2 = Intent(this,SignupActivity3::class.java)
+                        intent2.putExtra("name",name)
+                        intent2.putExtra("birth",birth)
+                        intent2.putExtra("phone",phone)
+                        intent2.putExtra("gender",gender)
+                        intent2.putExtra("email",email)
+                        intent2.putExtra("pw",pw)
+                        startActivity(intent2)
                     }
                 }
             }
