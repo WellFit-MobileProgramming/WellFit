@@ -72,6 +72,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginBottom="40dp"
+                        android:textColorHint="#cccccc"
+                        android:hint="ex) 홍길동"
                         android:drawablePadding="20dp"
                         android:textFontWeight="700"
                         android:textSize="20sp"
@@ -92,6 +94,8 @@
                         android:layout_marginBottom="40dp"
                         android:backgroundTint="#478C5C"
                         android:drawablePadding="20dp"
+                        android:textColorHint="#cccccc"
+                        android:hint="ex) 000101"
                         android:paddingLeft="15dp"
                         android:textColor="#000"
                         android:textFontWeight="700"
@@ -112,6 +116,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginBottom="40dp"
+                        android:hint="ex) 010-1234-5678"
+                        android:textColorHint="#cccccc"
                         android:drawablePadding="20dp"
                         android:textFontWeight="700"
                         android:textSize="20sp"
@@ -130,6 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
+                            android:id="@+id/man_btn"
                             android:layout_marginRight="24dp"
                             android:text="남성"
                             android:background="@drawable/signupbackground2"
@@ -138,6 +145,7 @@
                             android:layout_width="101dp"
                             android:layout_height="60dp"/>
                         <Button
+                            android:id="@+id/woman_btn"
                             android:text="여성"
                             android:background="@drawable/signupbackground2"
                             android:gravity="center"
