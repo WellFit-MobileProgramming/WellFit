@@ -92,8 +92,9 @@
 
         </LinearLayout>
         <Button
+            android:enabled="false"
             android:id="@+id/moveHome"
-            android:background="#92CFA5"
+            android:background="#CCE7D4"
             android:textColor="#fff"
             android:gravity="center"
             android:textFontWeight="700"
