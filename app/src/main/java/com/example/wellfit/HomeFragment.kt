@@ -1,5 +1,6 @@
 package com.example.wellfit
 import HorizontalItemDecorator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wellfit.databinding.FragmentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -22,6 +26,7 @@ class HomeFragment : Fragment(){
     lateinit var binding: FragmentHomeBinding
     lateinit var calendarAdapter: CalendarAdapter
     private lateinit var callback: OnBackPressedCallback
+    private var auth : FirebaseAuth? = null
     //보여줄 년, 월
     private var viewDate = ""
     //보여줄 년, 월, 일
@@ -33,7 +38,7 @@ class HomeFragment : Fragment(){
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        auth = Firebase.auth
         init()
         setMonth()
         onClick()
@@ -111,11 +116,18 @@ class HomeFragment : Fragment(){
             var recordFragment = RecordFragment()
             var bundle = Bundle()
             bundle.putString("changeDate", allDate)
-            Log.e("date",allDate)
             recordFragment.arguments = bundle
             activity?.supportFragmentManager!!.beginTransaction()
                 .replace(R.id.main_frm, recordFragment)
                 .commit()
+        }
+
+        binding.homeCheck1.setOnClickListener {
+            // 로그인 화면으로
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            auth?.signOut()
         }
     }
 

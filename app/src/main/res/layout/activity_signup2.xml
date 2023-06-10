@@ -52,6 +52,7 @@
                         android:layout_height="wrap_content"
                         android:text="계정 정보 입력"/>
                     <EditText
+                        android:id="@+id/id_et"
                         android:textColor="#000"
                         android:backgroundTint="#478C5C"
                         android:drawableLeft="@drawable/img_loginuser"
@@ -59,12 +60,13 @@
                         android:layout_height="75dp"
                         android:layout_marginBottom="40dp"
                         android:drawablePadding="20dp"
-                        android:hint="아이디"
+                        android:hint="이메일"
                         android:textFontWeight="700"
                         android:textSize="20sp"
                         android:textColorHint="#ccc"
                         android:paddingLeft="15dp"/>
                     <EditText
+                        android:id="@+id/pw_et"
                         android:textColor="#000"
                         android:backgroundTint="#478C5C"
                         android:layout_width="match_parent"
@@ -78,6 +80,7 @@
                         android:textColorHint="#ccc"
                         android:paddingLeft="15dp"/>
                     <EditText
+                        android:id="@+id/pw_certification_et"
                         android:textColor="#000"
                         android:backgroundTint="#478C5C"
                         android:layout_width="match_parent"
