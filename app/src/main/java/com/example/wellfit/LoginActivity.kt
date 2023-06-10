@@ -1,6 +1,7 @@
 package com.example.wellfit
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -43,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         }
         val moveBtn = binding.moveSignup
         val loginBtn = binding.loginBtn
+
         moveBtn.setOnClickListener{
             startActivity(intent2)
         }
@@ -58,7 +60,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isId = id.length()>0
+                isId = id.text.toString().isNotEmpty()
+                checkInput(isId,isPw)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -72,13 +75,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(pw.length()>0&&isId){
-                    loginBtn.isEnabled = true
-                    loginBtn.setBackgroundResource(R.drawable.loginbtnbackgroundactive)
-                }else{
-                    loginBtn.isEnabled=false
-                    loginBtn.setBackgroundResource(R.drawable.loginbtnbackground)
-                }
+                isPw = pw.text.toString().isNotEmpty()
+                checkInput(isId,isPw)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -88,8 +86,6 @@ class LoginActivity : AppCompatActivity() {
 
         loginBtn.setOnClickListener {
             signIn(binding.id.text.toString(),binding.pw.text.toString())
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
         }
     }
     // 로그인
@@ -113,11 +109,23 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
     }
+    
     // 유저정보 넘겨주고 메인 액티비티 호출
     fun moveMainPage(user: FirebaseUser?){
         if( user!= null){
             startActivity(Intent(this,MainActivity::class.java))
             finish()
+        }
+    }
+
+    //id, pw 입력 확인 후 버튼 변경
+    fun checkInput(isId:Boolean, isPw:Boolean) {
+        if(isId&&isPw){
+            binding.loginBtn.isEnabled = true
+            binding.loginBtn.setBackgroundResource(R.drawable.loginbtnbackgroundactive)
+        }else{
+            binding.loginBtn.isEnabled=false
+            binding.loginBtn.setBackgroundResource(R.drawable.loginbtnbackground)
         }
     }
 }
