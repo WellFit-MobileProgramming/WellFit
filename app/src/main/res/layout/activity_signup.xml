@@ -88,6 +88,8 @@
                         android:text="생년월일"/>
 
                     <EditText
+                        android:maxLength="6"
+                        android:inputType="number"
                         android:id="@+id/birth"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -110,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text="휴대폰 번호"/>
                     <EditText
+                        android:maxLength="13"
                         android:id="@+id/phone"
                         android:textColor="#000"
                         android:backgroundTint="#478C5C"
@@ -155,9 +158,37 @@
                     </LinearLayout>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/errorBox"
+                    android:background="@drawable/signuperrorbackground"
+                    android:padding="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/img_error"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:textFontWeight="700"
+                        android:textSize="15sp"
+                        android:id="@+id/erroMsg"
+                        android:textColor="#E1512E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="핸드폰 번호 형식을 확인해주세요!"/>
+                </LinearLayout>
                 <Button
+                    android:enabled="false"
                     android:id="@+id/moveSignUp"
-                    android:background="#92CFA5"
+                    android:background="#CCE7D4"
                     android:textColor="#fff"
                     android:gravity="center"
                     android:textFontWeight="700"

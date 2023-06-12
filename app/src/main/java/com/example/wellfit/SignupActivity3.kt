@@ -1,8 +1,11 @@
 package com.example.wellfit
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.example.wellfit.databinding.ActivitySignup3Binding
@@ -34,7 +37,43 @@ class SignupActivity3 : AppCompatActivity() {
         val gender = intent1.getStringExtra("gender")
         val email = intent1.getStringExtra("email")
         val pw = intent1.getStringExtra("pw")
+
+        var isHeight = false
+        var isWeight = false
+
+        binding.height.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isHeight = binding.height.text.isNotEmpty()
+                checkInput(isHeight,isWeight)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+        binding.weight.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isWeight = binding.weight.text.isNotEmpty()
+                checkInput(isHeight,isWeight)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
         val moveBtn = binding.moveHome
+
         moveBtn.setOnClickListener{
             val height = binding.height.text.toString()
             val weight = binding.weight.text.toString()
@@ -59,5 +98,15 @@ class SignupActivity3 : AppCompatActivity() {
                     Log.e("회원가입 실패",task.result.toString())
                 }
             }
+    }
+
+    fun checkInput(isHeight:Boolean, isWeight:Boolean) {
+        if(isHeight&&isWeight){
+            binding.moveHome.setBackgroundColor(Color.parseColor("#92CFA5"))
+            binding.moveHome.isEnabled = true
+        }else{
+            binding.moveHome.setBackgroundColor(Color.parseColor("#CCE7D4"))
+            binding.moveHome.isEnabled = false
+        }
     }
 }
