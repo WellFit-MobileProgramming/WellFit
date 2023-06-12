@@ -1,38 +1,68 @@
 package com.example.wellfit
+import android.content.Intent
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.wellfit.databinding.FragmentSettingBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 //설정화면
 class SettingFragment : Fragment(){
     lateinit var binding: FragmentSettingBinding
+    private var auth : FirebaseAuth? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        auth = Firebase.auth
         binding = FragmentSettingBinding.inflate(inflater, container, false)
 
+        //db 정보가져오기
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users").document(auth?.uid.toString())
+            .get()
+            .addOnSuccessListener { result->
+                binding.name.setText(result["name"].toString())
+                binding.editWeight.setText(result["weight"].toString())
+                binding.editHeight.setText(result["height"].toString())
+            }
+
+        var map = mutableMapOf<String, Any>()
+
+        //프로필 수정
         binding.profileEditBtn.setOnClickListener {
             var name = binding.name.text.toString()
             val dlg = EditDialogActivity(activity as AppCompatActivity)
             dlg.setOnOKClickedListener {
                     content->
                 if(content==="ok"){
-
-                    Toast.makeText(activity, "이름: $name", Toast.LENGTH_SHORT).show()
+                    map["name"]=name
+                    db.collection("users").document(auth?.uid.toString())
+                        .update(map)
+                        .addOnCompleteListener {
+                            if(it.isSuccessful){
+                                Toast.makeText(activity, "이름: $name", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                 }
             }
             dlg.show("이름을 ${name}으로 수정하시겠습니까?")
         }
 
+        //타이머 선택
         var isSelectedTimerNum = 0
         var isSelectedTime : String = "01:30"
         binding.timer1.setOnClickListener{
@@ -77,39 +107,69 @@ class SettingFragment : Fragment(){
         }
 
 
+        //식단, 운동 정보 수정
         var editHeight:String
         var editWeight: String
 
         binding.infoEditBtn.setOnClickListener {
+            editHeight=binding.editHeight.text.toString()
+            editWeight = binding.editWeight.text.toString()
             val dlg = EditDialogActivity(activity as AppCompatActivity)
             dlg.setOnOKClickedListener {
                 content->
                 if(content==="ok"){
-                    editHeight=binding.editHeight.text.toString()
-                    editWeight = binding.editWeight.text.toString()
-                    Toast.makeText(activity, "키: $editHeight, 몸무게: $editWeight, 타이머: $isSelectedTime", Toast.LENGTH_SHORT).show()
+                    map["height"]=editHeight
+                    db.collection("users").document(auth?.uid.toString())
+                        .update(map)
+                        .addOnCompleteListener {
+                            if(it.isSuccessful){
+                                map["weight"]=editWeight
+                                db.collection("users").document(auth?.uid.toString())
+                                    .update(map)
+                                    .addOnCompleteListener {
+                                        if(it.isSuccessful){
+                                            Toast.makeText(activity, "키: $editHeight, 몸무게: $editWeight, 타이머: $isSelectedTime", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                            }
+                        }
                 }
             }
             dlg.show("운동 및 식단 정보를 수정하시겠습니까?")
 
         }
 
+        //로그아웃
         binding.logoutBtn.setOnClickListener {
             val dlg = EditDialogActivity(activity as AppCompatActivity)
             dlg.setOnOKClickedListener {
                     content->
                 if(content==="ok"){
-                    Toast.makeText(activity, "로그아웃!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(activity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    auth?.signOut()
                 }
             }
             dlg.show("로그아웃 하시겠습니까?")
         }
+
+        //회원탈퇴
         binding.withdrawBtn.setOnClickListener {
             val dlg = EditDialogActivity(activity as AppCompatActivity)
             dlg.setOnOKClickedListener {
                     content->
                 if(content==="ok"){
-                    Toast.makeText(activity, "회원탈퇴!", Toast.LENGTH_SHORT).show()
+                    val user = auth!!.currentUser!!
+                    user.delete()
+                        .addOnCompleteListener {
+                            task ->
+                            if(task.isSuccessful){
+                                val intent = Intent(activity, LoginActivity::class.java)
+                               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                               startActivity(intent)
+                            }
+                        }
                 }
             }
             dlg.show("회원탈퇴 하시겠습니까?")
