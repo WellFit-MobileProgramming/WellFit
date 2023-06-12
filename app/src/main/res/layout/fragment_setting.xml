@@ -83,6 +83,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"/>
                     <EditText
+                        android:id="@+id/name"
                         android:backgroundTint="#000"
                         android:textColor="#000"
                         android:textFontWeight="500"
@@ -167,6 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <LinearLayout
+                                android:id="@+id/timer1"
                                 android:layout_marginRight="10dp"
                                 android:paddingHorizontal="28dp"
                                 android:paddingVertical="6dp"
@@ -183,6 +185,7 @@
                                     android:text="01:00"/>
                             </LinearLayout>
                             <LinearLayout
+                                android:id="@+id/timer2"
                                 android:layout_marginRight="10dp"
                                 android:paddingHorizontal="28dp"
                                 android:paddingVertical="6dp"
@@ -199,6 +202,7 @@
                                     android:text="01:30"/>
                             </LinearLayout>
                             <LinearLayout
+                                android:id="@+id/timer3"
                                 android:layout_marginRight="10dp"
                                 android:paddingHorizontal="28dp"
                                 android:paddingVertical="6dp"
@@ -212,9 +216,10 @@
                                     android:lineHeight="25sp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="01:30"/>
+                                    android:text="02:00"/>
                             </LinearLayout>
                             <LinearLayout
+                                android:id="@+id/timer4"
                                 android:paddingHorizontal="28dp"
                                 android:paddingVertical="6dp"
                                 android:background="@drawable/calendar_box"
@@ -227,7 +232,7 @@
                                     android:lineHeight="25sp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="01:30"/>
+                                    android:text="02:30"/>
                             </LinearLayout>
                         </LinearLayout>
                     </HorizontalScrollView>
@@ -263,6 +268,7 @@
                             android:layout_height="wrap_content"
                             android:text="키"/>
                         <EditText
+                            android:id="@+id/editHeight"
                             android:backgroundTint="#000"
                             android:textColor="#000"
                             android:layout_marginRight="17sp"
@@ -280,6 +286,7 @@
                             android:layout_height="wrap_content"
                             android:text="몸무게"/>
                         <EditText
+                            android:id="@+id/editWeight"
                             android:backgroundTint="#000"
                             android:textColor="#000"
                             android:gravity="center"
@@ -287,6 +294,11 @@
                             android:layout_height="wrap_content"
                             android:text="70"/>
                     </LinearLayout>
+                    <TextView
+                        android:textColor="#000"
+                        android:id="@+id/test"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:gravity="center"
