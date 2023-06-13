@@ -18,9 +18,12 @@ class LibAdapter(val items:ArrayList<Exercise>) : RecyclerView.Adapter<LibAdapte
     inner class ViewHolder(val binding: RowBinding):
             RecyclerView.ViewHolder(binding.root){
                 init {
-                    binding.libRecycleItem.setOnClickListener {
-                        itemClickListener?.OnItemClick(items[adapterPosition])
-                        //모달 띄우는 작업 수행
+                    binding.root.setOnClickListener {
+                        val position = adapterPosition
+                        if(position != RecyclerView.NO_POSITION){
+                            val exercise = items[position]
+                            itemClickListener?.OnItemClick(exercise)
+                        }
                     }
                 }
             }
