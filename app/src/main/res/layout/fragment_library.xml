@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#40CCE7D4"
@@ -29,6 +30,7 @@
         app:layout_constraintBottom_toBottomOf="@id/libTop" />
 
     <HorizontalScrollView
+        android:id="@+id/libBtn_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
@@ -100,5 +102,121 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/libBtn_layout">
+
+        <TextView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:ems="17"
+            android:gravity="center_vertical"
+            android:text="찾으시는 운동이 있으신가요?"
+            android:textColor="#50000000"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_box"
+            android:text="검색"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/search_bar"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#478c5c"
+        app:layout_constraintStart_toStartOf="@id/search_layout"
+        app:layout_constraintTop_toBottomOf="@id/search_layout"
+        app:layout_constraintEnd_toEndOf="@id/search_layout"
+        tools:layout_editor_absoluteX="318dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_lowerbody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_chest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_shoulder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_arm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
