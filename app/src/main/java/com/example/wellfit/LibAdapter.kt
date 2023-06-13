@@ -1,15 +1,13 @@
 package com.example.wellfit
 
 import android.view.LayoutInflater
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import com.example.wellfit.databinding.FragmentLibraryBinding
 import com.example.wellfit.databinding.RowBinding
 
 
-class LibAdapter(val items:ArrayList<Exercise>) : RecyclerView.Adapter<LibAdapter.ViewHolder>() {
-
+class LibAdapter(val itemsData:ArrayList<Exercise>) : RecyclerView.Adapter<LibAdapter.ViewHolder>() {
+    private var items: ArrayList<Exercise> = itemsData
     interface OnItemClickListener{
         fun OnItemClick(data: Exercise)
     }
@@ -17,16 +15,13 @@ class LibAdapter(val items:ArrayList<Exercise>) : RecyclerView.Adapter<LibAdapte
 
     inner class ViewHolder(val binding: RowBinding):
             RecyclerView.ViewHolder(binding.root){
-                init {
-                    binding.root.setOnClickListener {
-                        val position = adapterPosition
-                        if(position != RecyclerView.NO_POSITION){
-                            val exercise = items[position]
-                            itemClickListener?.OnItemClick(exercise)
-                        }
-                    }
-                }
+
             }
+
+    fun lib_search(newItems: ArrayList<Exercise>){
+        items = newItems
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = RowBinding.inflate(
@@ -39,9 +34,6 @@ class LibAdapter(val items:ArrayList<Exercise>) : RecyclerView.Adapter<LibAdapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val exercise = items[position]
-        val name = exercise.name
-
-        holder.binding.libRecycleItem.text = name
+        holder.binding.libRecycleItem.text = items[position].name
     }
 }

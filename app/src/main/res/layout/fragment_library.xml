@@ -112,14 +112,14 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/libBtn_layout">
 
-        <TextView
+        <EditText
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:ems="17"
             android:gravity="center_vertical"
-            android:text="찾으시는 운동이 있으신가요?"
-            android:textColor="#50000000"
+            android:hint="찾으시는 운동이 있으신가요?"
+            android:textColorHint="#50000000"
             android:textSize="15dp" />
 
         <Button
