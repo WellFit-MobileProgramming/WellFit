@@ -1,22 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="#40CCE7D4"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <TextView
-        android:id="@+id/library_title_tv"
+    <View
+        android:id="@+id/libTop"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="36sp"
-        android:textColor="#000000"
-        android:text="library"
+        android:layout_height="50dp"
+        android:background="#92CFA5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/libText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="라이브러리"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/libTop"
+        app:layout_constraintBottom_toBottomOf="@id/libTop" />
+
+    <HorizontalScrollView
+        android:id="@+id/libBtn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/libTop">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/lib_lowerBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#478C5C"
+                android:textStyle="bold"
+                android:background="@drawable/box_unclick"
+                android:text="하체" />
+
+            <Button
+                android:id="@+id/lib_chest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#478C5C"
+                android:textStyle="bold"
+                android:background="@drawable/box_unclick"
+                android:text="가슴" />
+
+            <Button
+                android:id="@+id/lib_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#478C5C"
+                android:textStyle="bold"
+                android:background="@drawable/box_unclick"
+                android:text="등" />
+
+            <Button
+                android:id="@+id/lib_shoulder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#478C5C"
+                android:textStyle="bold"
+                android:background="@drawable/box_unclick"
+                android:text="어깨" />
+
+            <Button
+                android:id="@+id/lib_arm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:textColor="#478C5C"
+                android:textStyle="bold"
+                android:background="@drawable/box_unclick"
+                android:text="팔" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/libBtn_layout">
+
+        <EditText
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:ems="17"
+            android:gravity="center_vertical"
+            android:hint="찾으시는 운동이 있으신가요?"
+            android:textColorHint="#50000000"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_box"
+            android:text="검색"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/search_bar"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#478c5c"
+        app:layout_constraintStart_toStartOf="@id/search_layout"
+        app:layout_constraintTop_toBottomOf="@id/search_layout"
+        app:layout_constraintEnd_toEndOf="@id/search_layout"
+        tools:layout_editor_absoluteX="318dp"
+        tools:layout_editor_absoluteY="118dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_lowerbody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_chest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_shoulder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lib_recycle_arm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:divider="#92cfa5"
+        android:dividerHeight="1dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
