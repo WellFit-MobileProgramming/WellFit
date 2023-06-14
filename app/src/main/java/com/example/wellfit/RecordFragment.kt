@@ -19,6 +19,7 @@ class RecordFragment : Fragment(){
 
     lateinit var binding: FragmentRecordBinding
     val recordWorkout = ArrayList<RecordWorkout>()
+    var specialDate : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,16 +31,16 @@ class RecordFragment : Fragment(){
         setData()
 
         //캘린더 액티비티에서 값이 넘어왔을 경우
-        val specialDate = arguments?.getString("changeDate")
+        specialDate = arguments?.getString("changeDate")
         if (specialDate != null) {
             //날짜, 구분선, 메시지 조정
-            binding.recordMonth.setText(specialDate.substring(4,6).toInt().toString()+"월")
-            binding.recordDateTv.setText(specialDate.substring(4,6).toInt().toString()+"월 "+specialDate.substring(6).toInt().toString()+"일")
+            binding.recordMonth.setText(specialDate!!.substring(4,6).toInt().toString()+"월")
+            binding.recordDateTv.setText(specialDate!!.substring(4,6).toInt().toString()+"월 "+specialDate!!.substring(6).toInt().toString()+"일")
 
             //주간캘린더 불러오기
             binding.recordWeekRecyclerview.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            val recordWeekRVAdapter = RecordWeekRVAdapter(specialDate)
+            val recordWeekRVAdapter = RecordWeekRVAdapter(specialDate!!)
             binding.recordWeekRecyclerview.adapter = recordWeekRVAdapter
             //주간캘린더 클릭이벤트
             recordWeekRVAdapter.setMyItemClickListener(object :
@@ -99,13 +100,12 @@ class RecordFragment : Fragment(){
 
     private fun onClick(){
         binding.recordWorkoutPlusBtn.setOnClickListener {
-            var workoutDetailFragment = WorkoutDetailFragment()
+            var workoutSelectFragment = WorkoutSelectFragment()
             var bundle = Bundle()
-            var date = binding.recordDateTv.text.toString()
-            bundle.putString("date", date)
-            workoutDetailFragment.arguments = bundle
+            bundle.putString("date", specialDate)
+            workoutSelectFragment.arguments = bundle
             activity?.supportFragmentManager!!.beginTransaction()
-                .replace(R.id.main_frm, workoutDetailFragment)
+                .replace(R.id.main_frm, workoutSelectFragment)
                 .commit()
         }
     }

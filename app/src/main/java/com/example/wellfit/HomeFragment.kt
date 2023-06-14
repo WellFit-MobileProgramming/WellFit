@@ -1,5 +1,6 @@
 package com.example.wellfit
 import HorizontalItemDecorator
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wellfit.databinding.FragmentHomeBinding
@@ -18,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.system.exitProcess
 
 
 //홈화면
@@ -121,14 +125,6 @@ class HomeFragment : Fragment(){
                 .replace(R.id.main_frm, recordFragment)
                 .commit()
         }
-
-        binding.homeCheck1.setOnClickListener {
-            // 로그인 화면으로
-            val intent = Intent(activity, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            auth?.signOut()
-        }
     }
 
     //초기함수
@@ -165,6 +161,29 @@ class HomeFragment : Fragment(){
         val stringDate = dateFormat.format(date)
         Log.e("날짜",stringDate)
         return stringDate
+    }
+
+    private var backPressedTime : Long = 0
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.e("back","backpress")
+                if (System.currentTimeMillis() - backPressedTime < 2000) {
+                    ActivityCompat.finishAffinity(requireActivity())
+                    exitProcess(0)
+                }
+
+                Toast.makeText(requireActivity(), "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                backPressedTime = System.currentTimeMillis()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }
 
