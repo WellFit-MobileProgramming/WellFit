@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentLibraryBinding
 import java.util.*
@@ -21,11 +20,11 @@ class LibraryFragment : Fragment(){
     lateinit var shoulderAdapter: LibAdapter
     lateinit var armAdapter: LibAdapter
 
-    val lowerBodyData:ArrayList<Exercise> = ArrayList()
-    val chestData:ArrayList<Exercise> = ArrayList()
-    val backData:ArrayList<Exercise> = ArrayList()
-    val shoulderData:ArrayList<Exercise> = ArrayList()
-    val armData:ArrayList<Exercise> = ArrayList()
+    val lowerBodyData:ArrayList<Exercise_explain> = ArrayList()
+    val chestData:ArrayList<Exercise_explain> = ArrayList()
+    val backData:ArrayList<Exercise_explain> = ArrayList()
+    val shoulderData:ArrayList<Exercise_explain> = ArrayList()
+    val armData:ArrayList<Exercise_explain> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,34 +40,44 @@ class LibraryFragment : Fragment(){
 
     fun initData(){
         val scan1 = Scanner(resources.openRawResource(R.raw.lower_body))
+        val scan6 = Scanner(resources.openRawResource(R.raw.lower_body_ex))
         while(scan1.hasNextLine()){
             val name = scan1.nextLine()
             val link = scan1.nextLine()
-            lowerBodyData.add(Exercise(name, link))
+            val explain = scan6.nextLine()
+            lowerBodyData.add(Exercise_explain(name, link, explain))
         }
         val scan2 = Scanner(resources.openRawResource(R.raw.chest))
+        val scan7 = Scanner(resources.openRawResource(R.raw.lower_body_ex))
         while(scan2.hasNextLine()){
             val name = scan2.nextLine()
             val link = scan2.nextLine()
-            chestData.add(Exercise(name, link))
+            val explain = scan7.nextLine()
+            chestData.add(Exercise_explain(name, link, explain))
         }
         val scan3 = Scanner(resources.openRawResource(R.raw.back))
+        val scan8 = Scanner(resources.openRawResource(R.raw.lower_body_ex))
         while(scan3.hasNextLine()){
             val name = scan3.nextLine()
             val link = scan3.nextLine()
-            backData.add(Exercise(name, link))
+            val explain = scan8.nextLine()
+            backData.add(Exercise_explain(name, link, explain))
         }
         val scan4 = Scanner(resources.openRawResource(R.raw.shoulder))
+        val scan9 = Scanner(resources.openRawResource(R.raw.lower_body_ex))
         while(scan4.hasNextLine()){
             val name = scan4.nextLine()
             val link = scan4.nextLine()
-            shoulderData.add(Exercise(name, link))
+            val explain = scan9.nextLine()
+            shoulderData.add(Exercise_explain(name, link, explain))
         }
         val scan5 = Scanner(resources.openRawResource(R.raw.arm))
+        val scan10 = Scanner(resources.openRawResource(R.raw.lower_body_ex))
         while(scan5.hasNextLine()){
             val name = scan5.nextLine()
             val link = scan5.nextLine()
-            armData.add(Exercise(name, link))
+            val explain = scan10.nextLine()
+            armData.add(Exercise_explain(name, link, explain))
         }
     }
     fun initRecyclerView(){
@@ -151,16 +160,16 @@ class LibraryFragment : Fragment(){
         }
     }
 
-    private fun showModal(ex_category:String, data:Exercise){
+    private fun showModal(ex_category:String, data:Exercise_explain){
         val modalFragment = ModalFragment() // 모달 Fragment 인스턴스 생성
-        modalFragment.setData(ex_category, data.name, data.name, data.link)
+        modalFragment.setData(ex_category, data.name, data.explain, data.link)
         modalFragment.show(requireActivity().supportFragmentManager, "MyModal")
     }
 
     private fun initSearch(){
         binding.searchBtn.setOnClickListener {
             val searchText = binding.searchView.text.toString().trim()
-            val filteredList = ArrayList<Exercise>()
+            val filteredList = ArrayList<Exercise_explain>()
 
             if(binding.libRecycleLowerbody.visibility == View.VISIBLE) {
                 // 검색어와 일치하는 아이템을 찾아 filteredList에 추가

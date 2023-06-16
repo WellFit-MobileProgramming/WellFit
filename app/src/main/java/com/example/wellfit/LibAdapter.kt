@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import com.example.wellfit.databinding.RowBinding
 
 
-class LibAdapter(val itemsData:ArrayList<Exercise>):
+class LibAdapter(val itemsData:ArrayList<Exercise_explain>):
     RecyclerView.Adapter<LibAdapter.ViewHolder>() {
-    private var items: ArrayList<Exercise> = itemsData
+    private var items: ArrayList<Exercise_explain> = itemsData
     interface OnItemClickListener{
         fun OnItemClick(position: Int)
     }
@@ -25,7 +25,7 @@ class LibAdapter(val itemsData:ArrayList<Exercise>):
         }
     }
 
-    fun lib_search(newItems: ArrayList<Exercise>){
+    fun lib_search(newItems: ArrayList<Exercise_explain>){
         items = newItems
         notifyDataSetChanged()
     }
