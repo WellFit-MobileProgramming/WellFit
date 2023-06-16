@@ -1,9 +1,11 @@
 package com.example.wellfit
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentLibraryBinding
 import java.util.*
@@ -12,6 +14,7 @@ import kotlin.collections.ArrayList
 //운동 라이브러리 화면
 class LibraryFragment : Fragment(){
     lateinit var binding: FragmentLibraryBinding
+
     lateinit var lowerBodyAdapter: LibAdapter
     lateinit var chestAdapter: LibAdapter
     lateinit var backAdapter: LibAdapter
@@ -72,52 +75,52 @@ class LibraryFragment : Fragment(){
         binding.libRecycleLowerbody.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         lowerBodyAdapter = LibAdapter(lowerBodyData)
-        binding.libRecycleLowerbody.adapter = lowerBodyAdapter
         lowerBodyAdapter.itemClickListener = object : LibAdapter.OnItemClickListener{
-            override fun OnItemClick(data: Exercise) {
-
+            override fun OnItemClick(position: Int) {
+                showModal("하체", lowerBodyData[position])
             }
         }
+        binding.libRecycleLowerbody.adapter = lowerBodyAdapter
 
         binding.libRecycleChest.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         chestAdapter = LibAdapter(chestData)
-        binding.libRecycleChest.adapter = chestAdapter
         chestAdapter.itemClickListener = object : LibAdapter.OnItemClickListener{
-            override fun OnItemClick(data: Exercise) {
-
+            override fun OnItemClick(position: Int) {
+                showModal("가슴", chestData[position])
             }
         }
+        binding.libRecycleChest.adapter = chestAdapter
 
         binding.libRecycleBack.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         backAdapter = LibAdapter(backData)
-        binding.libRecycleBack.adapter = backAdapter
         backAdapter.itemClickListener = object : LibAdapter.OnItemClickListener{
-            override fun OnItemClick(data: Exercise) {
-
+            override fun OnItemClick(position: Int) {
+                showModal("등", backData[position])
             }
         }
+        binding.libRecycleBack.adapter = backAdapter
 
         binding.libRecycleShoulder.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         shoulderAdapter = LibAdapter(shoulderData)
-        binding.libRecycleShoulder.adapter = shoulderAdapter
         shoulderAdapter.itemClickListener = object : LibAdapter.OnItemClickListener{
-            override fun OnItemClick(data: Exercise) {
-
+            override fun OnItemClick(position: Int) {
+                showModal("어깨", shoulderData[position])
             }
         }
+        binding.libRecycleShoulder.adapter = shoulderAdapter
 
         binding.libRecycleArm.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
         armAdapter = LibAdapter(armData)
-        binding.libRecycleArm.adapter = armAdapter
         armAdapter.itemClickListener = object : LibAdapter.OnItemClickListener{
-            override fun OnItemClick(data: Exercise) {
-
+            override fun OnItemClick(position: Int) {
+                showModal("팔", armData[position])
             }
         }
+        binding.libRecycleArm.adapter = armAdapter
     }
     private fun initButton() {  //button을 누를 시 recycler view visibility 설정
         binding.libLowerBody.setOnClickListener {
@@ -146,6 +149,12 @@ class LibraryFragment : Fragment(){
             binding.libRecycleArm.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
         }
+    }
+
+    private fun showModal(ex_category:String, data:Exercise){
+        val modalFragment = ModalFragment() // 모달 Fragment 인스턴스 생성
+        modalFragment.setData(ex_category, data.name, data.name, data.link)
+        modalFragment.show(requireActivity().supportFragmentManager, "MyModal")
     }
 
     private fun initSearch(){
