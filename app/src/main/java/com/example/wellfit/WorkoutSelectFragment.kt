@@ -36,6 +36,7 @@ class WorkoutSelectFragment : Fragment() {
         initLayout()
         initButton()
         initRecyclerView()
+        initSearch()
         return binding.root
     }
 
@@ -169,6 +170,23 @@ class WorkoutSelectFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, homeFragment)
                 .commitAllowingStateLoss()
+        }
+    }
+    fun initSearch() {
+        binding.searchBtn.setOnClickListener {
+            val searchText = binding.searchView.text.toString().trim()
+            val filteredList = ArrayList<Library>()
+            // 검색어와 일치하는 아이템을 찾아 filteredList에 추가
+            for (exercise in workoutData) {
+                if (exercise.name.contains(searchText, ignoreCase = true)) {
+                    filteredList.add(exercise)
+                }
+                // RecyclerView 어댑터에 새로운 리스트 설정하여 갱신
+            }
+            if(filteredList.isNotEmpty()){
+                workoutData = filteredList
+            }
+            initRecyclerView()
         }
     }
 }

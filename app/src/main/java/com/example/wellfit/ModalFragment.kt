@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +18,9 @@ import com.example.wellfit.databinding.FragmentModalBinding
 class ModalFragment : DialogFragment() {
     lateinit var binding: FragmentModalBinding
 
-    var ex_category:String?=null
-    var ex_name:String?=null
-    var explain:String?=null
-    var ex_link:String?=null
+    var type:String?=null
+    var name:String?=null
+    var content:String?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,19 +36,19 @@ class ModalFragment : DialogFragment() {
         binding.lmodalClose.setOnClickListener {
             dismiss()
         }
+        binding.explain.movementMethod = ScrollingMovementMethod()
         binding.goToLink.setOnClickListener {
-            val searchString = this.ex_name + " 운동 방법"
+            val searchString = this.name + " 운동 방법"
             val intent = Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://www.youtube.com/results?search_query=$searchString"))
             startActivity(intent)
         }
     }
 
-    fun setData(ex_category: String, ex_name: String, explain: String, ex_link: String){
-        this.ex_category = ex_category
-        this.ex_name = ex_name
-        this.explain = explain
-        this.ex_link = ex_link
+    fun setData(type: String, name: String, content: String){
+        this.type = type
+        this.name = name
+        this.content = content
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -59,9 +59,19 @@ class ModalFragment : DialogFragment() {
 
     override fun onStart(){
         super.onStart()
-        binding.categoryBtn.text = this.ex_category
-        binding.exName.text = this.ex_name
-        binding.explain.text = this.explain
+        if(this.type == "lower_body"){
+            binding.categoryBtn.text = "하체"
+        }else if (this.type == "arm"){
+            binding.categoryBtn.text = "팔"
+        }else if (this.type == "back"){
+            binding.categoryBtn.text = "등"
+        }else if (this.type == "chest"){
+            binding.categoryBtn.text = "가슴"
+        }else if (this.type == "shoulder"){
+            binding.categoryBtn.text = "어깨"
+        }
+        binding.exName.text = this.name
+        binding.explain.text = this.content
         dialog?.window?.apply {
             setGravity(Gravity.BOTTOM)
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 배경 투명하게 설정

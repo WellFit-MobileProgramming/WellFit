@@ -172,6 +172,7 @@
             android:gravity="center_vertical"
             android:hint="찾으시는 운동이 있으신가요?"
             android:textColorHint="#50000000"
+            android:textColor="@color/black"
             android:textSize="15dp" />
 
         <Button

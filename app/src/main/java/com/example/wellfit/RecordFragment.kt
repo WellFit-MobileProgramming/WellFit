@@ -43,6 +43,7 @@ class RecordFragment : Fragment() {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
         auth = Firebase.auth
         fireStore = Firebase.firestore
+        binding.recordWorkoutRecyclerview.minimumHeight = 130
 
         //캘린더 액티비티에서 넘겨준 값 받아옴
         specialDate = arguments?.getString("changeDate").toString()
@@ -100,7 +101,6 @@ class RecordFragment : Fragment() {
     }else{
         binding.recordWorkoutPlusBtn.visibility = View.VISIBLE
         binding.recordWorkoutPlusTv.visibility = View.VISIBLE
-        binding.recordWorkoutRecyclerview.minimumHeight = 130
     }
 
     fun initWorkoutRecyclerView(){
