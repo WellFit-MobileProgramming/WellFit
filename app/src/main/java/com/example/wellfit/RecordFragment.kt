@@ -1,104 +1,118 @@
 package com.example.wellfit
 
 import HorizontalItemDecorator
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentRecordBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.util.ArrayList
 import java.util.Date
 import java.util.Locale
 
-class RecordFragment : Fragment(){
+
+class RecordFragment : Fragment() {
 
     lateinit var binding: FragmentRecordBinding
-    val recordWorkout = ArrayList<RecordWorkout>()
-    var specialDate : String? = null
+    private var auth: FirebaseAuth? = null
+    private var fireStore: FirebaseFirestore? = null
+    val recordWorkout = ArrayList<WorkoutType>()
+    lateinit var workoutAdapter : RecordWorkoutRVAdapter
+    var specialDate = ""
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentRecordBinding.inflate(inflater, container, false)
+        auth = Firebase.auth
+        fireStore = Firebase.firestore
+
+        //캘린더 액티비티에서 넘겨준 값 받아옴
+        specialDate = arguments?.getString("changeDate").toString()
+        //날짜, 구분선, 메시지 조정
+        binding.recordMonth.text = specialDate!!.substring(4, 6).toInt().toString() + "월"
+        binding.recordDateTv.text =
+            specialDate!!.substring(4, 6).toInt().toString() + "월 " + specialDate!!.substring(6)
+                .toInt().toString() + "일"
+        settingPlusBtn()
+
+        //주간캘린더 불러오기
+        binding.recordWeekRecyclerview.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val recordWeekRVAdapter = RecordWeekRVAdapter(specialDate!!)
+        binding.recordWeekRecyclerview.adapter = recordWeekRVAdapter
+        //주간캘린더 클릭이벤트
+        recordWeekRVAdapter.setMyItemClickListener(object :
+            RecordWeekRVAdapter.MyItemClickListener {
+            override fun onItemClick(day: String) {
+                binding.recordMonth.text = day.substring(4, 6).toInt().toString() + "월"
+                binding.recordDateTv.text =
+                    day.substring(4, 6).toInt().toString() + "월 " + day.substring(6).toInt()
+                        .toString() + "일"
+                specialDate= day
+                recordWorkout.clear()
+                settingPlusBtn()
+                setData()
+            }
+        })
+
+        initWorkoutRecyclerView()
 
         setData()
 
-        //캘린더 액티비티에서 값이 넘어왔을 경우
-        specialDate = arguments?.getString("changeDate")
-        if (specialDate != null) {
-            //날짜, 구분선, 메시지 조정
-            binding.recordMonth.setText(specialDate!!.substring(4,6).toInt().toString()+"월")
-            binding.recordDateTv.setText(specialDate!!.substring(4,6).toInt().toString()+"월 "+specialDate!!.substring(6).toInt().toString()+"일")
-
-            //주간캘린더 불러오기
-            binding.recordWeekRecyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            val recordWeekRVAdapter = RecordWeekRVAdapter(specialDate!!)
-            binding.recordWeekRecyclerview.adapter = recordWeekRVAdapter
-            //주간캘린더 클릭이벤트
-            recordWeekRVAdapter.setMyItemClickListener(object :
-                RecordWeekRVAdapter.MyItemClickListener {
-                override fun onItemClick(day: String) {
-                    binding.recordMonth.setText(day.substring(4,6).toInt().toString()+"월")
-                    binding.recordDateTv.setText(day.substring(4,6).toInt().toString()+"월 "+day.substring(6).toInt().toString()+"일")
-                }
-            })
-
-            binding.recordWorkoutRecyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            val recordWorkoutRVAdapter = RecordWorkoutRVAdapter(recordWorkout)
-            binding.recordWorkoutRecyclerview.adapter = recordWorkoutRVAdapter
-
-            recordWorkoutRVAdapter.setMyItemClickListener(object :
-                RecordWorkoutRVAdapter.MyItemClickListener {
-                override fun onItemClick(position: Int) {
-                    TODO("Not yet implemented")
-                }
-                }
-            )
-
-
-        }else{
-            //캘린더액티비티에서 값이 넘어오지 않는경우(오늘날짜 default)
-            init()
-            val now: Long = System.currentTimeMillis()
-            val date = Date(now)
-            val dateFormat = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
-            val stringDate = dateFormat.format(date)
-
-            binding.recordWeekRecyclerview.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-            val recordWeekRVAdapter = RecordWeekRVAdapter(stringDate)
-            binding.recordWeekRecyclerview.adapter = recordWeekRVAdapter
-
-            recordWeekRVAdapter.setMyItemClickListener(object :
-                RecordWeekRVAdapter.MyItemClickListener {
-                override fun onItemClick(day: String) {
-                }
-            })
-        }
         //화면 넓이
         val display = requireActivity().windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         val width = size.x
         val height = size.y
-        binding.recordWeekRecyclerview.addItemDecoration(HorizontalItemDecorator(width/75,height/200))
+        binding.recordWeekRecyclerview.addItemDecoration(
+            HorizontalItemDecorator(
+                width / 75,
+                height / 200
+            )
+        )
 
         onClick()
 
         return binding.root
     }
+    fun settingPlusBtn() = if (today()!=specialDate){
+        binding.recordWorkoutPlusBtn.visibility = View.GONE
+        binding.recordWorkoutPlusTv.visibility = View.GONE
+    }else{
+        binding.recordWorkoutPlusBtn.visibility = View.VISIBLE
+        binding.recordWorkoutPlusTv.visibility = View.VISIBLE
+        binding.recordWorkoutRecyclerview.minimumHeight = 130
+    }
 
-    private fun onClick(){
+    fun initWorkoutRecyclerView(){
+        binding.recordWorkoutRecyclerview.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        workoutAdapter = RecordWorkoutRVAdapter(recordWorkout)
+        binding.recordWorkoutRecyclerview.adapter = workoutAdapter
+        workoutAdapter.notifyDataSetChanged()
+    }
+
+    private fun onClick() {
+
         binding.recordWorkoutPlusBtn.setOnClickListener {
             var workoutSelectFragment = WorkoutSelectFragment()
             var bundle = Bundle()
@@ -108,36 +122,75 @@ class RecordFragment : Fragment(){
                 .replace(R.id.main_frm, workoutSelectFragment)
                 .commit()
         }
+        binding.recordLeftarrow.setOnClickListener{
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            homeFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, homeFragment)
+                .commitAllowingStateLoss()
+        }
+        binding.homeClose.setOnClickListener{
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            homeFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, homeFragment)
+                .commitAllowingStateLoss()
+        }
+        binding.recordWorkoutStartBtn.setOnClickListener {
+            val dlg = EditDialogActivity(activity as AppCompatActivity)
+            dlg.setOnOKClickedListener {
+                    content->
+                if(content==="ok"){
+                    var workoutCheckFragment = WorkoutCheckFragment()
+                    var bundle = Bundle()
+                    bundle.putString("date",specialDate)
+                    bundle.putSerializable("data",recordWorkout)
+                    workoutCheckFragment.arguments = bundle
+                    (context as MainActivity).supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_frm, workoutCheckFragment)
+                        .commitAllowingStateLoss()
+                }
+            }
+            dlg.show("운동을 시작하시겠습니까?")
+        }
     }
 
-    private fun init() {
-        //시작시 해당월, 날짜 (오늘날짜로 default)
-        binding.recordDateTv.setText(setdate().substring(4,6).toInt().toString()+"월 "+setdate().substring(6).toInt().toString()+"일")
-        binding.recordMonth.setText(setMonth())
-
-    }
-
-    private fun setdate(): String {
+    private fun today(): String {
         val now: Long = System.currentTimeMillis()
         val date = Date(now)
-        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
-        val stringDate = dateFormat.format(date)
-
-        return stringDate
-    }
-    //해당월 설정 함수
-    private fun setMonth(): String {
-        val now: Long = System.currentTimeMillis()
-        val month = Date(now)
-        val monthFormat = SimpleDateFormat("MM", Locale("ko", "KR"))
-        val stringMonth = (monthFormat.format(month).toInt()).toString()+"월"
-
-        return stringMonth
+        val dateFormat3 = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
+        return dateFormat3.format(date)
     }
 
     private fun setData() {
-        for (i in 0 until 11){
-            recordWorkout.add(RecordWorkout("사이드 레터럴 라이즈","2kg / 3kg / 4kg / 5kg \n 3kg / 4kg"))
-        }
+        val workoutRef = fireStore?.collection("workouts")?.document(auth?.uid.toString())
+        workoutRef?.get()
+            ?.addOnSuccessListener { data ->
+                if(data.exists()){
+                    val workoutArray  = data.toObject<Workout>()
+                    if (workoutArray != null) {
+                        for (i in workoutArray.workoutType!!) {
+                            if (i.date == specialDate){
+                                recordWorkout.add(i)
+                                Log.e("운동", recordWorkout.toString())
+                            }
+                        }
+                        initWorkoutRecyclerView()
+                    }
+                }else{
+                    binding.recordWorkoutEmpty.visibility = View.VISIBLE
+                }
+                if (recordWorkout.isEmpty()){
+                    binding.recordWorkoutEmpty.visibility = View.VISIBLE
+                }else{
+                    binding.recordWorkoutEmpty.visibility = View.GONE
+                }
+            }
+            ?.addOnFailureListener {
+                Log.e("운동리스트", "데이터수신실패")
+                binding.recordWorkoutEmpty.visibility = View.VISIBLE
+            }
     }
 }

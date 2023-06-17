@@ -66,7 +66,6 @@ class LibraryData {
                 for(i in libraryList!!){
                     if(i.kind == kind){
                         list.add(i)
-                        Log.e("list",list.toString())
                     }
                 }
             }

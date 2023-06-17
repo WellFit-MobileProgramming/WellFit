@@ -1,5 +1,6 @@
 package com.example.wellfit
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,10 @@ import kotlin.collections.ArrayList
 class WorkoutSelectFragment : Fragment() {
     lateinit var binding: FragmentWorkoutSelectBinding
     lateinit var adapter: WorkoutSelectAdapter
+
     var workoutData: ArrayList<Library> = ArrayList()
+    var specialDate = ""
+    var type = "하체"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +31,18 @@ class WorkoutSelectFragment : Fragment() {
     ): View? {
         binding = FragmentWorkoutSelectBinding.inflate(inflater, container, false)
         LibraryData.initDataList()
+        specialDate = arguments?.getString("date").toString()
         workoutData = LibraryData.getList("lower_body")!!
+        initLayout()
         initButton()
         initRecyclerView()
         return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun initLayout(){
+        binding.libText.text =
+            "${specialDate.substring(4, 6).toInt()}월 ${specialDate.substring(6).toInt()}일 운동"
     }
 
     fun initRecyclerView() {
@@ -42,8 +54,17 @@ class WorkoutSelectFragment : Fragment() {
         binding.libRecyclerview.adapter = adapter
         adapter.setMyItemClickListener(object :
             WorkoutSelectAdapter.MyItemClickListener {
-            override fun onItemClick(position: Int) {
-                TODO("Not yet implemented")
+            override fun onItemClick(workoutName : String) {
+                Log.e("운동이름",workoutName)
+                val workoutDetailFragment = WorkoutDetailFragment()
+                val bundle = Bundle()
+                bundle.putString("date", specialDate)
+                bundle.putString("type", type)
+                bundle.putString("name", workoutName)
+                workoutDetailFragment.arguments = bundle
+                activity?.supportFragmentManager!!.beginTransaction()
+                    .replace(R.id.main_frm, workoutDetailFragment)
+                    .commit()
             }
         })
         adapter.notifyDataSetChanged()
@@ -65,7 +86,7 @@ class WorkoutSelectFragment : Fragment() {
             binding.libShoulder.setTextColor(Color.parseColor("#478C5C"))
             workoutData = LibraryData.getList("lower_body")!!
             initRecyclerView()
-
+            type = "하체"
         }
 
         binding.libArm.setOnClickListener {
@@ -81,6 +102,7 @@ class WorkoutSelectFragment : Fragment() {
             binding.libShoulder.setTextColor(Color.parseColor("#478C5C"))
             workoutData = LibraryData.getList("arm")!!
             initRecyclerView()
+            type = "팔"
         }
 
         binding.libBack
@@ -97,7 +119,7 @@ class WorkoutSelectFragment : Fragment() {
                 binding.libShoulder.setTextColor(Color.parseColor("#478C5C"))
                 workoutData = LibraryData.getList("back")!!
                 initRecyclerView()
-
+                type = "등"
             }
 
         binding.libChest.setOnClickListener {
@@ -113,6 +135,7 @@ class WorkoutSelectFragment : Fragment() {
             binding.libShoulder.setTextColor(Color.parseColor("#478C5C"))
             workoutData = LibraryData.getList("chest")!!
             initRecyclerView()
+            type = "가슴"
         }
         binding.libShoulder.apply {
             setOnClickListener {
@@ -128,7 +151,24 @@ class WorkoutSelectFragment : Fragment() {
                 binding.libShoulder.setTextColor(Color.parseColor("#ffffff"))
                 workoutData = LibraryData.getList("shoulder")!!
                 initRecyclerView()
+                type = "어깨"
             }
+        }
+        binding.workoutCheckLeftarrow.setOnClickListener{
+            var recordFragment = RecordFragment()
+            var bundle = Bundle()
+            recordFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, recordFragment)
+                .commitAllowingStateLoss()
+        }
+        binding.workoutCheckClose.setOnClickListener{
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            homeFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, homeFragment)
+                .commitAllowingStateLoss()
         }
     }
 }

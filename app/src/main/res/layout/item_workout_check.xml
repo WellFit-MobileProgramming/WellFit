@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/workout_check_type_view" />
 
     <TextView
-        android:id="@+id/item_workout_detail_kg_tv"
+        android:id="@+id/item_workout_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
-        android:id="@+id/item_workout_detail_close"
+        android:id="@+id/item_workout_check_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"

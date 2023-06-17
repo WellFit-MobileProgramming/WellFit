@@ -35,10 +35,10 @@ class WorkoutDetailFragment : Fragment(){
         auth = Firebase.auth
         fireStore = Firebase.firestore
 
+        initLayout()
+
         //캘린더 액티비티에서 값이 넘어왔을 경우
-        specialDate = arguments?.getString("date")
         if (specialDate != null) {
-            Log.e("날짜Wk",specialDate.toString())
             //날짜 조정
             binding.workoutDetailMonth.text =
                 "${specialDate!!.substring(4, 6).toInt()}월 ${specialDate!!.substring(6).toInt()}일"
@@ -93,6 +93,12 @@ class WorkoutDetailFragment : Fragment(){
             binding.workoutDetailRecyclerview.adapter = workoutDetailRVAdapter
         }
         return binding.root
+    }
+
+    fun initLayout(){
+        specialDate = arguments?.getString("date")
+        binding.workoutDetailTypeTv.text = arguments?.getString("type")
+        binding.workoutDetailNameTv.text = arguments?.getString("name")
     }
 
     private fun onClick(adapter: WorkoutDetailRVAdapter) {

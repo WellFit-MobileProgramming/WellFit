@@ -108,9 +108,9 @@ class CalendarAdapter(private val viewDate: String) : RecyclerView.Adapter <Cale
         cal.set(Calendar.MONTH, month - 1)
         for (i in 0 until cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
             days.add("" + (i + 1))
-            if (i == todayDate){
+            Log.e("월",Calendar.MONTH.toString())
+            if (month == todayMonth && i == todayDate){
                 todayNum = i + daynum - 2
-            }
         }
         return cal.getActualMaximum(Calendar.DAY_OF_MONTH)
     }

@@ -52,12 +52,12 @@
         app:layout_constraintTop_toTopOf="@+id/record_navigationView" />
 
     <ImageView
-        android:id="@+id/home_rightarrow"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:id="@+id/home_close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="20dp"
         android:scaleType="fitXY"
-        android:src="@drawable/right_arrow"
+        android:src="@drawable/close"
         app:layout_constraintBottom_toBottomOf="@id/record_navigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/record_navigationView" />
@@ -218,23 +218,66 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_workout_title_tv" />
 
+                <TextView
+                    android:id="@+id/record_workout_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="운동기록이 존재하지 않아요!"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#cccccc"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/record_empty_view"
+                    app:layout_constraintTop_toBottomOf="@id/record_workout_bar"
+                    android:visibility="gone"/>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/record_workout_recyclerview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
                     android:orientation="vertical"
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
                     android:scrollbars="none"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constrainedWidth="true"
-                    app:layout_constraintBaseline_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/record_workout_start_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_workout_bar"
                     tools:listitem="@layout/item_record_workout" />
+
+                <View
+                    android:id="@+id/record_empty_view"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:background="#ffffff"
+                    android:translationZ="-1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_workout_empty" />
+
+                <Button
+                    android:id="@+id/record_workout_start_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="1.8dp"
+                    android:layout_marginEnd="1.8dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/btn_box3"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:text="운동 시작하기"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/record_workout_recyclerview"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

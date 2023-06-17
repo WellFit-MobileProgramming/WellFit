@@ -11,7 +11,7 @@ import com.example.wellfit.databinding.RowBinding
 class WorkoutSelectAdapter(val items:ArrayList<Library>) : RecyclerView.Adapter<WorkoutSelectAdapter.ViewHolder>() {
 
     interface MyItemClickListener {
-        fun onItemClick(position : Int)
+        fun onItemClick(workoutName : String)
     }
 
     private lateinit var mItemClickListener: MyItemClickListener
@@ -31,7 +31,7 @@ class WorkoutSelectAdapter(val items:ArrayList<Library>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.bind(position)
         holder.itemView.setOnClickListener{
-            mItemClickListener.onItemClick(position)
+            mItemClickListener.onItemClick(items[position].name)
         }
     }
 
