@@ -115,7 +115,7 @@
                 android:background="@drawable/calendar_box"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/record_workout_contraintlayout"
+                app:layout_constraintBottom_toBottomOf="@id/record_diet_contraintlayout"
                 app:layout_constraintTop_toBottomOf="@id/record_calendarView" />
 
             <TextView
@@ -153,7 +153,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="40dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/record_diet_contraintlayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_bar">
@@ -275,10 +275,224 @@
                     android:text="운동 시작하기"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/record_workout_recyclerview"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="record_diet_contraintlayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/record_diet_contraintlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/record_workout_contraintlayout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/calendar_box">
+
+                <TextView
+                    android:id="@+id/record_diet_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="오늘의 식단"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/record_diet_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <Button
+                    android:id="@+id/record_diet_plus_btn"
+                    android:layout_width="103dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/btn_box"
+                    android:text="추가하기"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/record_diet_title_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/record_diet_title_tv" />
+
+                <TextView
+                    android:id="@+id/record_diet_plus_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="추가하기"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/record_diet_plus_btn"
+                    app:layout_constraintEnd_toEndOf="@+id/record_diet_plus_btn"
+                    app:layout_constraintStart_toStartOf="@id/record_diet_plus_btn"
+                    app:layout_constraintTop_toTopOf="@id/record_diet_plus_btn" />
+
+                <View
+                    android:id="@+id/record_diet_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#478c5c"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_diet_title_tv" />
+
+                <TextView
+                    android:id="@+id/item_diet_title_breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="아침"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/record_diet_bar"/>
+                <TextView
+                    android:id="@+id/item_diet_breakfast_kcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:text="309kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/item_diet_title_breakfast"/>
+                <TextView
+                    android:id="@+id/item_breakfast_diet_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_marginTop="4dp"
+                    android:text="현미밥   200kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_diet_breakfast_kcal"/>
+
+                <View
+                    android:id="@+id/item_diet_bar2"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#478c5c"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_breakfast_diet_list" />
+                <TextView
+                    android:id="@+id/item_diet_title_lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="점심"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/item_diet_bar2"/>
+                <TextView
+                    android:id="@+id/item_diet_lunch_kcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:text="309kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/item_diet_title_lunch"/>
+                <TextView
+                    android:id="@+id/item_lunch_diet_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_marginTop="4dp"
+                    android:text="현미밥   200kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_diet_lunch_kcal"/>
+
+                <View
+                    android:id="@+id/item_diet_bar3"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#478c5c"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_lunch_diet_list" />
+                <TextView
+                    android:id="@+id/item_diet_title_dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:text="저녁"
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/item_diet_bar3"/>
+                <TextView
+                    android:id="@+id/item_diet_dinner_kcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:text="309kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/item_diet_title_dinner"/>
+                <TextView
+                    android:id="@+id/item_dinner_diet_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:layout_marginTop="4dp"
+                    android:text="현미밥   200kcal"
+                    android:lineHeight="22sp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_diet_dinner_kcal"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
