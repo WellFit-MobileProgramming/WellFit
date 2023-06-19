@@ -3,6 +3,7 @@ package com.example.wellfit
 import HorizontalItemDecorator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
@@ -10,7 +11,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentRecordBinding
@@ -23,6 +27,7 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.system.exitProcess
 
 
 class RecordFragment : Fragment() {
@@ -155,6 +160,27 @@ class RecordFragment : Fragment() {
             }
             dlg.show("운동을 시작하시겠습니까?")
         }
+    }
+
+    lateinit var callback: OnBackPressedCallback
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                var homeFragment = HomeFragment()
+                var bundle = Bundle()
+                homeFragment.arguments = bundle
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, homeFragment)
+                    .commitAllowingStateLoss()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
     private fun today(): String {

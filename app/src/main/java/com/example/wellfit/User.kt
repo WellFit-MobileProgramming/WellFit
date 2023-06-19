@@ -8,3 +8,5 @@ data class User(var uid:String? = null,
                 var email:String? = null,
                 var height:String? = null,
                 var weight:String? = null)
+
+data class Timer(var time :String? = null)

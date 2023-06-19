@@ -1,4 +1,5 @@
 package com.example.wellfit
+import android.content.Context
 import android.content.Intent
 import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.wellfit.databinding.FragmentSettingBinding
@@ -20,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 class SettingFragment : Fragment(){
     lateinit var binding: FragmentSettingBinding
     private var auth : FirebaseAuth? = null
+    var isSelectedTime : String = "01:30"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +67,6 @@ class SettingFragment : Fragment(){
 
         //타이머 선택
         var isSelectedTimerNum = 0
-        var isSelectedTime : String = "01:30"
         binding.timer1.setOnClickListener{
             if(isSelectedTimerNum!==1){
                 isSelectedTimerNum=1
@@ -128,10 +130,19 @@ class SettingFragment : Fragment(){
                                     .update(map)
                                     .addOnCompleteListener {
                                         if(it.isSuccessful){
-                                            Toast.makeText(activity, "키: $editHeight, 몸무게: $editWeight, 타이머: $isSelectedTime", Toast.LENGTH_SHORT).show()
+                                            Log.e("수정",editHeight)
+                                            Toast.makeText(binding.root.context, "키: $editHeight, 몸무게: $editWeight, 타이머: $isSelectedTime", Toast.LENGTH_SHORT).show()
                                         }
                                     }
                             }
+                        }
+                    val timer = Timer(isSelectedTime)
+                    db.collection("timer").document(auth?.uid.toString())
+                        .set(timer)
+                        .addOnSuccessListener {
+                            Log.e("SettingFragment", "토스트 메시지 호출 직전")
+                            Toast.makeText(activity?.applicationContext, "타이머: $isSelectedTime", Toast.LENGTH_LONG).show()
+                            Log.e("SettingFragment", "토스트 메시지 호출 직후")
                         }
                 }
             }
@@ -175,7 +186,37 @@ class SettingFragment : Fragment(){
             dlg.show("회원탈퇴 하시겠습니까?")
         }
 
+        binding.homeLeftarrow.setOnClickListener {
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            homeFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, homeFragment)
+                .commitAllowingStateLoss()
+        }
+
         return binding.root
+    }
+
+    lateinit var callback: OnBackPressedCallback
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                var homeFragment = HomeFragment()
+                var bundle = Bundle()
+                homeFragment.arguments = bundle
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, homeFragment)
+                    .commitAllowingStateLoss()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }
 

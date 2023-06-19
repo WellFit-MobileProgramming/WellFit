@@ -62,7 +62,6 @@ class HomeFragment : Fragment(){
             override fun onItemClick(date: String) {
                 allDate = date
                 val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
-                Log.e("날짜",selectDay)
                 calendarAdapter.notifyDataSetChanged()
                 binding.homeDateTv.text = selectDay
             }
@@ -74,7 +73,6 @@ class HomeFragment : Fragment(){
         val dateFormat2 = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
         viewDate = dateFormat2.format(date)
         binding.homeRightarrow.setOnClickListener {
-            Log.e("이후달",(cal.get(Calendar.MONTH )+1).toString())
                 cal.add(Calendar.MONTH, +1)
                 binding.homeMonth.text = (cal.get(Calendar.MONTH) + 1).toString() + "월"
                 val date = Date(cal.timeInMillis)
@@ -87,7 +85,6 @@ class HomeFragment : Fragment(){
                 override fun onItemClick(date: String) {
                     allDate = date
                     val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
-                    Log.e("날짜",selectDay)
                     calendarAdapter.notifyDataSetChanged()
                     binding.homeDateTv.text = selectDay
                 }
@@ -106,7 +103,6 @@ class HomeFragment : Fragment(){
                 override fun onItemClick(date: String) {
                     allDate = date
                     val selectDay = allDate.substring(4,6).toInt().toString() + "월 " +allDate.substring(6,8).toInt().toString() +"일"
-                    Log.e("날짜",selectDay)
                     calendarAdapter.notifyDataSetChanged()
                     binding.homeDateTv.text = selectDay
                 }
@@ -159,7 +155,6 @@ class HomeFragment : Fragment(){
         val date = Date(now)
         val dateFormat = SimpleDateFormat("yyyyMMdd", Locale("ko", "KR"))
         val stringDate = dateFormat.format(date)
-        Log.e("날짜",stringDate)
         return stringDate
     }
 
@@ -168,7 +163,6 @@ class HomeFragment : Fragment(){
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Log.e("back","backpress")
                 if (System.currentTimeMillis() - backPressedTime < 2000) {
                     ActivityCompat.finishAffinity(requireActivity())
                     exitProcess(0)

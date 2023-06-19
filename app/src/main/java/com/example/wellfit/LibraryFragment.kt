@@ -1,12 +1,14 @@
 package com.example.wellfit
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentLibraryBinding
@@ -146,11 +148,11 @@ class LibraryFragment : Fragment(){
             }
         }
         binding.workoutCheckLeftarrow.setOnClickListener{
-            var recordFragment = RecordFragment()
+            var homeFragment = HomeFragment()
             var bundle = Bundle()
-            recordFragment.arguments = bundle
+            homeFragment.arguments = bundle
             (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, recordFragment)
+                .replace(R.id.main_frm, homeFragment)
                 .commitAllowingStateLoss()
         }
         binding.workoutCheckClose.setOnClickListener{
@@ -161,6 +163,27 @@ class LibraryFragment : Fragment(){
                 .replace(R.id.main_frm, homeFragment)
                 .commitAllowingStateLoss()
         }
+    }
+
+    lateinit var callback: OnBackPressedCallback
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                var homeFragment = HomeFragment()
+                var bundle = Bundle()
+                homeFragment.arguments = bundle
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, homeFragment)
+                    .commitAllowingStateLoss()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
     fun initSearch() {
         binding.searchBtn.setOnClickListener {

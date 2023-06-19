@@ -1,10 +1,12 @@
 package com.example.wellfit
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wellfit.databinding.FragmentWorkoutDetailBinding
@@ -162,6 +164,44 @@ class WorkoutDetailFragment : Fragment(){
                 binding.workoutDetailPlusBtn.visibility = View.GONE
             }
         }
+        binding.workoutDetailLeftarrow.setOnClickListener{
+            var workoutSelectFragment = WorkoutSelectFragment()
+            var bundle = Bundle()
+            bundle.putString("date",specialDate)
+            workoutSelectFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, workoutSelectFragment)
+                .commitAllowingStateLoss()
+        }
+        binding.workoutDetailClose.setOnClickListener{
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            homeFragment.arguments = bundle
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, homeFragment)
+                .commitAllowingStateLoss()
+        }
+    }
+    lateinit var callback: OnBackPressedCallback
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                var workoutSelectFragment = WorkoutSelectFragment()
+                var bundle = Bundle()
+                bundle.putString("date",specialDate)
+                workoutSelectFragment.arguments = bundle
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, workoutSelectFragment)
+                    .commitAllowingStateLoss()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
     private fun startRecordFragment() {
